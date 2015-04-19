@@ -31,11 +31,55 @@ Subset the dataset by omitting NA's (using sqldf package)
 
 ```r
 require("sqldf")
+require ("plyr")
+require("lubridate")
+```
+
+```
+## Loading required package: lubridate
+## 
+## Attaching package: 'lubridate'
+## 
+## The following object is masked from 'package:plyr':
+## 
+##     here
+```
+
+```r
+require("date")
+```
+
+```
+## Loading required package: date
+```
+
+```r
+require("ggplot2")
+```
+
+```
+## Loading required package: ggplot2
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 3.1.3
+```
+
+```
+## Find out what's changed in ggplot2 with
+## news(Version == "1.0.1", package = "ggplot2")
+```
+
+```r
 Processed_Data <- sqldf("select sum(steps) as steps, 
                                 date
                                 from Activity_Data 
                                 group by date 
                                 having steps <> 'NA'")
+```
+
+```
+## Loading required package: tcltk
 ```
 ## -------------------------------------------------------------------------------------------
 #### Section 2 - What is mean total number of steps taken per day?
@@ -68,7 +112,6 @@ Use plyr packages match funtion to update missing data
 
 
 ```r
-require(plyr)
 Missing_Data <- Activity_Data[is.na(Activity_Data$steps),]
 Missing_Data$steps <- round(Average_Step$AverageSteps[match(Average_Step$interval, Missing_Data$interval)])
 Complete_Data <- rbind(Missing_Data, Activity_Data[!is.na(Activity_Data$steps),])
@@ -94,3 +137,32 @@ Median number of steps taken per day is 1.0762 &times; 10<sup>4</sup>
 * The mean value has changed negligibly
 
 * The Median value has shifted to next lower value, apparently because of introduction of average steps
+
+## --------------------------------------------------------------------------------------------
+#### Section 5 - Are there differences in activity patterns between weekdays and weekends?
+
+
+
+```r
+Days <- c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+Day_Ind <- c(rep("Weekday",5),rep("Weekend",2))
+
+Weekday_Ind <- data.frame(Days,Day_Ind)
+
+Complete_Data$day <- weekdays(as.Date(Complete_Data$date, format="%Y-%m-%d"),abbreviate=TRUE)
+
+Complete_Data$dayofweek <- Weekday_Ind$Day_Ind[match(Complete_Data$day,Weekday_Ind$Days)]
+
+Average_Steps_Day <- sqldf("select round(sum(steps)/count(steps)) as step, 
+                                   interval, 
+                                   dayofweek 
+                                   from Complete_Data 
+                                   group by dayofweek, interval")
+
+
+Average_Steps_Day$dayofweek <- as.factor(Average_Steps_Day$dayofweek)
+```
+
+As shown in the plot below, the pattern of number of steps is similar between weekends and weekday with minor deviations (e.g step activity picks up in the mid intervals during weekends as compared against same during weekdays)
+
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
