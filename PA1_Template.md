@@ -33,53 +33,13 @@ Subset the dataset by omitting NA's (using sqldf package)
 require("sqldf")
 require ("plyr")
 require("lubridate")
-```
-
-```
-## Loading required package: lubridate
-## 
-## Attaching package: 'lubridate'
-## 
-## The following object is masked from 'package:plyr':
-## 
-##     here
-```
-
-```r
 require("date")
-```
-
-```
-## Loading required package: date
-```
-
-```r
 require("ggplot2")
-```
-
-```
-## Loading required package: ggplot2
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 3.1.3
-```
-
-```
-## Find out what's changed in ggplot2 with
-## news(Version == "1.0.1", package = "ggplot2")
-```
-
-```r
 Processed_Data <- sqldf("select sum(steps) as steps, 
                                 date
                                 from Activity_Data 
                                 group by date 
                                 having steps <> 'NA'")
-```
-
-```
-## Loading required package: tcltk
 ```
 ## ------------------------------------------------------------------------------
 #### Section 2 - What is mean total number of steps taken per day?
@@ -106,7 +66,7 @@ Time interval 835 has the highest average number of steps.
 
 #### Section 4 - Imputing missing values
 
-Number of rows with missing step counts - `nrow(Activity_Data[is.na(Activity_Data),])`
+Number of rows with missing step counts - 2304
 
 Use plyr packages match funtion to update missing data
 
