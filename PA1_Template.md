@@ -81,7 +81,7 @@ Processed_Data <- sqldf("select sum(steps) as steps,
 ```
 ## Loading required package: tcltk
 ```
-## -------------------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------
 #### Section 2 - What is mean total number of steps taken per day?
 
 Here is a historgam of steps taken each day
@@ -92,7 +92,7 @@ Mean number of steps taken per day is 1.0766189 &times; 10<sup>4</sup>
 
 Median number of steps taken per day is 10765
 
-## --------------------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------
 
 ####Section 3 - What is the average daily activity pattern?
 
@@ -102,7 +102,7 @@ Below graph is plotted using ts() function for plotting time series
 
 Time interval 835 has the highest average number of steps.
 
-## --------------------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------
 
 #### Section 4 - Imputing missing values
 
@@ -138,7 +138,8 @@ Median number of steps taken per day is 1.0762 &times; 10<sup>4</sup>
 
 * The Median value has shifted to next lower value, apparently because of introduction of average steps
 
-## --------------------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------
+
 #### Section 5 - Are there differences in activity patterns between weekdays and weekends?
 
 
